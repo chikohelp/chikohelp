@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <style>
         body { background: #4b0082; color: #fff; font-family: sans-serif; padding: 20px; }
-        .theme-btn { background: #fff; color: #000; padding: 15px; margin: 10px 0; border-radius: 10px; cursor: pointer; font-weight: bold; display: flex; justify-content: space-between; }
-        #details { display: none; background: #2a004d; padding: 20px; border-radius: 10px; }
+        .theme-btn { background: #fff; color: #000; padding: 15px; margin: 10px 0; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        #details { display: none; background: #2a004d; padding: 20px; border-radius: 10px; margin-top: 20px; }
+        .back-btn { background: #ff0; color: #000; padding: 10px; margin-top: 10px; cursor: pointer; border-radius: 5px; display: inline-block; }
         .admin-controls { display: none; margin-top: 20px; border: 1px solid #fff; padding: 10px; }
-        input, button { padding: 8px; margin: 5px; }
     </style>
 </head>
 <body>
@@ -15,42 +15,42 @@
     <div id="main-screen">
         <h1>chikohelp</h1>
         <div id="list">
-            <div class="theme-btn" onclick="alert('Тут подробная информация...')">007: Замена ПУ</div>
+            <div class="theme-btn" onclick="showDetails('007: Замена ПУ', 'Тут подробная инструкция по замене ПУ...')">007: Замена ПУ</div>
         </div>
 
-        <!-- Панель управления (появляется после ввода пароля) -->
-        <div id="admin-panel">
+        <div id="admin-panel" style="margin-top:40px;">
             <input type="password" id="pass" placeholder="Пароль">
             <button onclick="check()">Войти</button>
         </div>
 
         <div id="editor" class="admin-controls">
-            <h3>Управление темами</h3>
-            <input type="text" id="newTitle" placeholder="Заголовок">
-            <button onclick="addTheme()">Добавить</button>
-            <button onclick="deleteLast()">Удалить последнюю</button>
+            <h3>Управление</h3>
+            <button onclick="deleteLast()">Удалить последнюю тему</button>
         </div>
     </div>
 
+    <div id="details">
+        <h2 id="detail-title"></h2>
+        <p id="detail-text"></p>
+        <div class="back-btn" onclick="hideDetails()">Назад</div>
+    </div>
+
     <script>
+        function showDetails(title, text) {
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('details').style.display = 'block';
+            document.getElementById('detail-title').innerText = title;
+            document.getElementById('detail-text').innerText = text;
+        }
+        function hideDetails() {
+            document.getElementById('main-screen').style.display = 'block';
+            document.getElementById('details').style.display = 'none';
+        }
         function check() {
             if(document.getElementById('pass').value === "Mironnmm#") {
                 document.getElementById('editor').style.display = 'block';
-                document.getElementById('admin-panel').style.display = 'none';
-                alert("Режим администратора активен!");
             } else { alert("Неверный пароль"); }
         }
-
-        function addTheme() {
-            let title = document.getElementById('newTitle').value;
-            if(!title) return;
-            let div = document.createElement('div');
-            div.className = 'theme-btn';
-            div.innerHTML = title + ' <span>&gt;</span>';
-            document.getElementById('list').appendChild(div);
-            document.getElementById('newTitle').value = '';
-        }
-
         function deleteLast() {
             let list = document.getElementById('list');
             if(list.lastElementChild) list.removeChild(list.lastElementChild);
