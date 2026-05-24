@@ -3,39 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { background: #1a0033; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; transition: 0.3s; }
+        body { background: #1a0033; color: #fff; font-family: sans-serif; padding: 20px; }
         h1 { text-align: center; color: #bf00ff; text-shadow: 0 0 10px #bf00ff; }
-        .theme-btn { 
-            background: rgba(255, 255, 255, 0.1); border: 1px solid #bf00ff; 
-            color: #fff; padding: 15px; margin: 10px 0; border-radius: 15px; 
-            cursor: pointer; transition: 0.3s; backdrop-filter: blur(5px);
-        }
-        .theme-btn:hover { background: #bf00ff; transform: scale(1.02); }
-        #details { display: none; background: #2a004d; padding: 25px; border-radius: 20px; border: 2px solid #bf00ff; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .admin-controls { display: none; margin-top: 30px; border: 2px dashed #bf00ff; padding: 15px; border-radius: 15px; }
-        input { width: 90%; padding: 12px; margin: 5px 0; border-radius: 8px; border: none; }
-        button { padding: 10px 20px; cursor: pointer; background: #bf00ff; color: white; border: none; border-radius: 8px; margin: 5px; }
+        .icon-box { text-align: center; margin-bottom: 20px; }
+        .icon-box img { width: 80px; height: 80px; margin: 10px; border: 2px solid #bf00ff; border-radius: 15px; }
+        .theme-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid #bf00ff; color: #fff; padding: 15px; margin: 10px 0; border-radius: 15px; cursor: pointer; transition: 0.3s; }
+        .theme-btn:hover { background: #bf00ff; }
+        #details { display: none; background: #2a004d; padding: 25px; border-radius: 20px; border: 2px solid #bf00ff; }
+        .footer { text-align: center; margin-top: 50px; color: #888; font-size: 0.9em; }
+        button { padding: 10px 20px; background: #bf00ff; color: white; border: none; border-radius: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div id="main-screen">
         <h1>chikohelp</h1>
-        <div id="list"></div>
-
-        <div id="admin-panel" style="margin-top:40px;">
-            <input type="password" id="pass" placeholder="Пароль администратора">
-            <button onclick="check()">Войти</button>
+        
+        <div class="icon-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Счетчик">
+            <img src="https://cdn-icons-png.flaticon.com/512/2666/2666415.png" alt="Квитанция">
         </div>
 
-        <div id="editor" class="admin-controls">
-            <h3>Энерго-редактор</h3>
-            <input type="text" id="newTitle" placeholder="Заголовок (например: ПУ 007)">
-            <input type="text" id="newText" placeholder="Подробная информация...">
-            <button onclick="addTheme()">Добавить тему</button>
-            <button onclick="deleteLast()">Удалить последнюю</button>
-        </div>
+        <div id="list">
+            </div>
+
+        <div class="footer">Создатель: Мирбек.Б</div>
     </div>
 
     <div id="details">
@@ -54,28 +46,6 @@
         function hideDetails() {
             document.getElementById('main-screen').style.display = 'block';
             document.getElementById('details').style.display = 'none';
-        }
-        function check() {
-            if(document.getElementById('pass').value === "Mironnmm7#") {
-                document.getElementById('editor').style.display = 'block';
-                document.getElementById('admin-panel').style.display = 'none';
-            } else { alert("Неверный пароль!"); }
-        }
-        function addTheme() {
-            let title = document.getElementById('newTitle').value;
-            let text = document.getElementById('newText').value;
-            if(!title) return;
-            let div = document.createElement('div');
-            div.className = 'theme-btn';
-            div.innerText = '⚡ ' + title;
-            div.onclick = function() { showDetails(title, text); };
-            document.getElementById('list').appendChild(div);
-            document.getElementById('newTitle').value = '';
-            document.getElementById('newText').value = '';
-        }
-        function deleteLast() {
-            let list = document.getElementById('list');
-            if(list.lastElementChild) list.removeChild(list.lastElementChild);
         }
     </script>
 </body>
