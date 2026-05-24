@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <style>
         body { background: #1a0033; color: #fff; font-family: sans-serif; padding: 20px; }
-        h1 { text-align: center; color: #bf00ff; text-shadow: 0 0 10px #bf00ff; }
+        h1 { text-align: center; color: #bf00ff; }
         .icon-box { text-align: center; margin-bottom: 20px; }
         .icon-box img { width: 80px; height: 80px; margin: 10px; border: 2px solid #bf00ff; border-radius: 15px; }
-        .theme-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid #bf00ff; color: #fff; padding: 15px; margin: 10px 0; border-radius: 15px; cursor: pointer; transition: 0.3s; }
-        .theme-btn:hover { background: #bf00ff; }
+        .theme-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid #bf00ff; color: #fff; padding: 15px; margin: 10px 0; border-radius: 15px; cursor: pointer; }
         #details { display: none; background: #2a004d; padding: 25px; border-radius: 20px; border: 2px solid #bf00ff; }
+        .admin-panel { margin-top: 40px; border: 2px dashed #bf00ff; padding: 20px; border-radius: 15px; }
         .footer { text-align: center; margin-top: 50px; color: #888; font-size: 0.9em; }
+        input { width: 90%; padding: 10px; margin: 5px 0; border-radius: 5px; }
         button { padding: 10px 20px; background: #bf00ff; color: white; border: none; border-radius: 10px; cursor: pointer; }
     </style>
 </head>
@@ -18,14 +19,24 @@
 
     <div id="main-screen">
         <h1>chikohelp</h1>
-        
         <div class="icon-box">
             <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Счетчик">
             <img src="https://cdn-icons-png.flaticon.com/512/2666/2666415.png" alt="Квитанция">
         </div>
 
-        <div id="list">
+        <div id="list"></div>
+
+        <div class="admin-panel">
+            <h3>Панель администратора</h3>
+            <input type="password" id="pass" placeholder="Пароль">
+            <button onclick="check()">Войти</button>
+            <div id="editor" style="display:none; margin-top:15px;">
+                <input type="text" id="t" placeholder="Заголовок">
+                <input type="text" id="tx" placeholder="Текст">
+                <button onclick="generate()">Сгенерировать код для вставки</button>
+                <textarea id="result" style="width:90%; height:80px; margin-top:10px;"></textarea>
             </div>
+        </div>
 
         <div class="footer">Создатель: Мирбек.Б</div>
     </div>
@@ -37,11 +48,22 @@
     </div>
 
     <script>
-        function showDetails(title, text) {
+        function check() {
+            if(document.getElementById('pass').value === "Mironnmm7#") {
+                document.getElementById('editor').style.display = 'block';
+            } else { alert("Неверный пароль"); }
+        }
+        function generate() {
+            let t = document.getElementById('t').value;
+            let tx = document.getElementById('tx').value;
+            let code = `<div class="theme-btn" onclick="showDetails('${t}', '${tx}')">⚡ ${t}</div>`;
+            document.getElementById('result').value = code;
+        }
+        function showDetails(t, tx) {
             document.getElementById('main-screen').style.display = 'none';
             document.getElementById('details').style.display = 'block';
-            document.getElementById('detail-title').innerText = title;
-            document.getElementById('detail-text').innerText = text;
+            document.getElementById('detail-title').innerText = t;
+            document.getElementById('detail-text').innerText = tx;
         }
         function hideDetails() {
             document.getElementById('main-screen').style.display = 'block';
