@@ -1,41 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<style>
-body{background:#000;color:#fff;font-family:sans-serif;padding:20px;}
-input{width:100%;padding:15px;border-radius:20px;border:none;margin-bottom:20px;}
-div{background:#fff;color:#000;padding:15px;margin-bottom:10px;border-radius:20px;font-weight:bold;}
-.adm{display:none;background:#ff0;padding:15px;border-radius:20px;margin-bottom:20px;color:red;}
-</style>
+    <meta charset="UTF-8">
+    <style>
+        body { background: #000; color: #fff; font-family: sans-serif; padding: 20px; }
+        .theme-btn { 
+            background: #fff; color: #000; padding: 15px; margin: 10px 0; 
+            border-radius: 10px; cursor: pointer; font-weight: bold; 
+        }
+        #details { display: none; background: #222; padding: 20px; border-radius: 10px; }
+        .back-btn { background: #ff0; color: #000; padding: 10px; margin-top: 10px; cursor: pointer; border-radius: 5px; }
+    </style>
 </head>
-<body onload="loadData()">
-<input type="text" id="s" placeholder="Поиск..." oninput="f()">
-<div id="p" class="adm">
-    <input type="text" id="newText" placeholder="Введите новый пункт">
-    <button onclick="add()">Добавить</button>
-</div>
-<div id="list"></div>
-<input type="password" id="pass" placeholder="Пароль админа" onchange="check()">
+<body>
 
-<script>
-function f(){let v=document.getElementById('s').value.toLowerCase();document.querySelectorAll('.i').forEach(i=>i.style.display=i.innerText.toLowerCase().includes(v)?'block':'none');}
-function check(){if(document.getElementById('pass').value == "Mironnmm7#"){document.getElementById('p').style.display='block';}else{alert('Неверный пароль');}}
+    <!-- Главный экран -->
+    <div id="main-screen">
+        <h1>Помощь</h1>
+        <div class="theme-btn" onclick="showDetails('007: Замена ПУ', 'Тут подробная инструкция как делать замену ПУ...')">007: Замена ПУ</div>
+        <div class="theme-btn" onclick="showDetails('008: Настройка связи', 'Инструкция по настройке связи...')">008: Настройка связи</div>
+    </div>
 
-function saveData(){localStorage.setItem('myDB', document.getElementById('list').innerHTML);}
-function loadData(){if(localStorage.getItem('myDB')) document.getElementById('list').innerHTML = localStorage.getItem('myDB');}
+    <!-- Экран деталей -->
+    <div id="details">
+        <h2 id="detail-title"></h2>
+        <p id="detail-text"></p>
+        <div class="back-btn" onclick="hideDetails()">Назад</div>
+    </div>
 
-function add(){
-    let val = document.getElementById('newText').value;
-    if(val){
-        let d = document.createElement('div');
-        d.className = 'i';
-        d.innerText = val;
-        document.getElementById('list').appendChild(d);
-        document.getElementById('newText').value = '';
-        saveData();
-    }
-}
-</script>
+    <script>
+        function showDetails(title, text) {
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('details').style.display = 'block';
+            document.getElementById('detail-title').innerText = title;
+            document.getElementById('detail-text').innerText = text;
+        }
+        function hideDetails() {
+            document.getElementById('main-screen').style.display = 'block';
+            document.getElementById('details').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
