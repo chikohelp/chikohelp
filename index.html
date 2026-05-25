@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>chikohelp</title>
     <style>
         body { background: #1a0033; color: #fff; font-family: sans-serif; padding: 20px; overflow-x: hidden; }
         h1 { text-align: center; color: #bf00ff; text-shadow: 0 0 20px #bf00ff; }
@@ -20,9 +21,10 @@
         .theme-btn:hover { background: #bf00ff; transform: scale(1.02); }
         
         #details { display: none; background: #2a004d; padding: 25px; border-radius: 20px; border: 2px solid #bf00ff; }
-        .admin-panel { margin-top: 40px; border: 2px dashed #bf00ff; padding: 20px; border-radius: 15px; }
-        input { width: 90%; padding: 10px; margin: 5px 0; border-radius: 5px; }
-        button { padding: 10px 20px; background: #bf00ff; color: white; border: none; border-radius: 10px; cursor: pointer; }
+        .admin-panel { margin-top: 40px; border: 2px dashed #bf00ff; padding: 20px; border-radius: 15px; background: rgba(0,0,0,0.2); }
+        input, textarea { width: 90%; padding: 10px; margin: 5px 0; border-radius: 5px; background: #110022; color: #fff; border: 1px solid #bf00ff; }
+        button { padding: 10px 20px; background: #bf00ff; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #d400ff; }
     </style>
 </head>
 <body>
@@ -36,37 +38,75 @@
         <h1>chikohelp</h1>
 
         <div id="list">
-            </div>
-
+            <div class="theme-btn" onclick="showDetails('007: Замена прибор учета ээ', 'Замена происходит в том случае если у вас сломался прибор по электроэнергии ')">⚡ 007: Замена прибор учета ээ</div>
+        </div>
         <div class="admin-panel">
             <h3>Панель администратора</h3>
             <input type="password" id="pass" placeholder="Пароль">
             <button onclick="check()">Войти</button>
+            
             <div id="editor" style="display:none; margin-top:15px;">
-                <input type="text" id="t" placeholder="Заголовок">
-                <input type="text" id="tx" placeholder="Текст">
+                <input type="text" id="t" placeholder="Заголовок темы">
+                <textarea id="tx" rows="4" placeholder="Текст статьи / помощи..."></textarea>
                 <button onclick="generate()">Сгенерировать код</button>
-                <textarea id="result" style="width:90%; height:60px; margin-top:10px;"></textarea>
+                
+                <p style="font-size: 13px; color: #0ff; margin-top: 10px;">Скопируй код ниже и вставь на GitHub внутрь блока &lt;div id="list"&gt;:</p>
+                <textarea id="result" style="height:60px;" readonly onclick="this.select()"></textarea>
             </div>
         </div>
-        <div class="footer" style="text-align:center; color:#888; margin-top:20px;">Создатель: Мирбек.Б</div>
+        
+        <div class="footer" style="text-align:center; color:#888; margin-top:40px;">Создатель: Мирбек.Б</div>
     </div>
 
     <div id="details">
         <h2 id="detail-title" style="color:#0ff;"></h2>
-        <p id="detail-text"></p>
+        <p id="detail-text" style="line-height: 1.6; white-space: pre-wrap;"></p>
         <button onclick="hideDetails()">Назад</button>
     </div>
 
     <script>
-        function check() { if(document.getElementById('pass').value === "Mironnmm7#") document.getElementById('editor').style.display = 'block'; else alert("Неверный пароль"); }
-        function generate() {
-            let t = document.getElementById('t').value;
-            let tx = document.getElementById('tx').value;
-            document.getElementById('result').value = `<div class="theme-btn" onclick="showDetails('${t}', '${tx}')">⚡ ${t}</div>`;
+        function check() { 
+            if(document.getElementById('pass').value === "Mironnmm7#") {
+                document.getElementById('editor').style.display = 'block'; 
+            } else { 
+                alert("Неверный пароль"); 
+            } 
         }
-        function showDetails(t, tx) { document.getElementById('main-screen').style.display = 'none'; document.getElementById('details').style.display = 'block'; document.getElementById('detail-title').innerText = t; document.getElementById('detail-text').innerText = tx; }
-        function hideDetails() { document.getElementById('main-screen').style.display = 'block'; document.getElementById('details').style.display = 'none'; }
+        
+        function generate() {
+            let t = document.getElementById('t').value.trim();
+            let tx = document.getElementById('tx').value.trim();
+            
+            if(!t || !tx) {
+                alert("Заполни заголовок и текст!");
+                return;
+            }
+            
+            let safeT = t.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+            let safeTx = tx.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+            
+            // Админка выдаст ТОЛЬКО ОДНУ СТРОЧКУ КНОПКИ, а не весь сайт!
+            let code = `<div class="theme-btn" onclick="showDetails('${safeT}', '${safeTx}')">⚡ ${safeT}</div>`;
+            
+            let resultArea = document.getElementById('result');
+            resultArea.value = code;
+            resultArea.select();
+            
+            document.getElementById('t').value = "";
+            document.getElementById('tx').value = "";
+        }
+        
+        function showDetails(t, tx) { 
+            document.getElementById('main-screen').style.display = 'none'; 
+            document.getElementById('details').style.display = 'block'; 
+            document.getElementById('detail-title').innerText = t; 
+            document.getElementById('detail-text').innerText = tx; 
+        }
+        
+        function hideDetails() { 
+            document.getElementById('main-screen').style.display = 'block'; 
+            document.getElementById('details').style.display = 'none'; 
+        }
     </script>
 </body>
 </html>
