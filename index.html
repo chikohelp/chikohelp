@@ -6,20 +6,11 @@
     <style>
         body { background: #1a0033; color: #fff; font-family: sans-serif; padding: 20px; overflow-x: hidden; }
         h1 { text-align: center; color: #bf00ff; text-shadow: 0 0 20px #bf00ff; }
-        
-        /* Эффект проводов (линии) */
         .wires { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: 0.1; }
         .wire { position: absolute; background: cyan; width: 2px; height: 100px; animation: move 3s linear infinite; }
         @keyframes move { from { top: -100px; } to { top: 100%; } }
-
-        /* Кнопки тем */
-        .theme-btn { 
-            background: rgba(255, 255, 255, 0.05); border: 1px solid #bf00ff; 
-            color: #fff; padding: 15px; margin: 10px 0; border-radius: 15px; 
-            cursor: pointer; transition: 0.3s; 
-        }
+        .theme-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid #bf00ff; color: #fff; padding: 15px; margin: 10px 0; border-radius: 15px; cursor: pointer; transition: 0.3s; }
         .theme-btn:hover { background: #bf00ff; transform: scale(1.02); }
-        
         #details { display: none; background: #2a004d; padding: 25px; border-radius: 20px; border: 2px solid #bf00ff; }
         .admin-panel { margin-top: 40px; border: 2px dashed #bf00ff; padding: 20px; border-radius: 15px; background: rgba(0,0,0,0.2); }
         input, textarea { width: 90%; padding: 10px; margin: 5px 0; border-radius: 5px; background: #110022; color: #fff; border: 1px solid #bf00ff; }
@@ -28,6 +19,11 @@
     </style>
 </head>
 <body>
+
+    <div id="list">
+        <div class="theme-btn" onclick="showDetails('007: Замена прибор учета ээ', 'Замена происходит в том случае если у вас сломался прибор по электроэнергии ')">⚡ 007: Замена прибор учета ээ</div>
+        <div class="theme-btn" onclick="showDetails('008: коммерческие услуги', 'Текст описания коммерческих услуг или как создать заявку...')">⚡ 008: коммерческие услуги</div>
+    </div>
     <div class="wires">
         <div class="wire" style="left: 10%;"></div>
         <div class="wire" style="left: 50%; animation-delay: 1s;"></div>
@@ -37,9 +33,6 @@
     <div id="main-screen">
         <h1>chikohelp</h1>
 
-        <div id="list">
-            <div class="theme-btn" onclick="showDetails('007: Замена прибор учета ээ', 'Замена происходит в том случае если у вас сломался прибор по электроэнергии ')">⚡ 007: Замена прибор учета ээ</div>
-        </div>
         <div class="admin-panel">
             <h3>Панель администратора</h3>
             <input type="password" id="pass" placeholder="Пароль">
@@ -49,8 +42,7 @@
                 <input type="text" id="t" placeholder="Заголовок темы">
                 <textarea id="tx" rows="4" placeholder="Текст статьи / помощи..."></textarea>
                 <button onclick="generate()">Сгенерировать код</button>
-                
-                <p style="font-size: 13px; color: #0ff; margin-top: 10px;">Скопируй код ниже и вставь на GitHub внутрь блока &lt;div id="list"&gt;:</p>
+                <p style="font-size: 13px; color: #0ff; margin-top: 10px;">Скопируй код ниже и добавь на GitHub внутрь блока list:</p>
                 <textarea id="result" style="height:60px;" readonly onclick="this.select()"></textarea>
             </div>
         </div>
@@ -76,37 +68,18 @@
         function generate() {
             let t = document.getElementById('t').value.trim();
             let tx = document.getElementById('tx').value.trim();
-            
-            if(!t || !tx) {
-                alert("Заполни заголовок и текст!");
-                return;
-            }
-            
+            if(!t || !tx) { alert("Заполни заголовок и text!"); return; }
             let safeT = t.replace(/'/g, "\\'").replace(/"/g, "&quot;");
             let safeTx = tx.replace(/'/g, "\\'").replace(/"/g, "&quot;");
-            
-            // Админка выдаст ТОЛЬКО ОДНУ СТРОЧКУ КНОПКИ, а не весь сайт!
             let code = `<div class="theme-btn" onclick="showDetails('${safeT}', '${safeTx}')">⚡ ${safeT}</div>`;
-            
             let resultArea = document.getElementById('result');
             resultArea.value = code;
             resultArea.select();
-            
             document.getElementById('t').value = "";
             document.getElementById('tx').value = "";
         }
-        
-        function showDetails(t, tx) { 
-            document.getElementById('main-screen').style.display = 'none'; 
-            document.getElementById('details').style.display = 'block'; 
-            document.getElementById('detail-title').innerText = t; 
-            document.getElementById('detail-text').innerText = tx; 
-        }
-        
-        function hideDetails() { 
-            document.getElementById('main-screen').style.display = 'block'; 
-            document.getElementById('details').style.display = 'none'; 
-        }
+        function showDetails(t, tx) { document.getElementById('main-screen').style.display = 'none'; document.getElementById('details').style.display = 'block'; document.getElementById('detail-title').innerText = t; document.getElementById('detail-text').innerText = tx; }
+        function hideDetails() { document.getElementById('main-screen').style.display = 'block'; document.getElementById('details').style.display = 'none'; }
     </script>
 </body>
 </html>
