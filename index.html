@@ -17,7 +17,7 @@
         .wire { position: absolute; background: cyan; width: 2px; height: 100px; animation: move 3s linear infinite; }
         @keyframes move { from { top: -100px; } to { top: 100%; } }
 
-        /* Переключатели разделов */
+        /* Переключатели разделов (Вкладки) */
         .tabs { display: flex; justify-content: space-between; width: 90%; margin: 0 auto 15px auto; gap: 10px; }
         .tab-btn { flex: 1; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(191, 0, 255, 0.3); color: #888; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 15px; transition: 0.3s; text-align: center; }
         .tab-btn.active { background: rgba(191, 0, 255, 0.2); border-color: #bf00ff; color: #fff; box-shadow: 0 0 10px rgba(191, 0, 255, 0.4); }
@@ -26,7 +26,7 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* Крупные кнопки тем */
+        /* Кнопки тем */
         .theme-btn { 
             background: rgba(255, 255, 255, 0.03); 
             border: 1px solid rgba(191, 0, 255, 0.5); 
@@ -49,7 +49,7 @@
         /* Окно с текстом статьи */
         #details { display: none; background: #2a004d; padding: 25px; border-radius: 20px; border: 2px solid #bf00ff; box-shadow: 0 0 30px #bf00ff; margin-top: 20px; }
         
-        /* Нижняя панель по углам */
+        /* Нижняя панель */
         .bottom-bar { position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; align-items: center; z-index: 10; }
         .admin-toggle-btn { background: none; border: none; color: #442266; cursor: pointer; font-size: 12px; transition: 0.3s; padding: 5px; }
         .admin-toggle-btn:hover { color: #bf00ff; }
@@ -58,7 +58,6 @@
         #admin-content { display: none; margin: 15px auto; width: 90%; background: rgba(20, 0, 40, 0.95); padding: 15px; border-radius: 10px; border: 1px solid #bf00ff; box-shadow: 0 0 20px #000; }
         input, textarea { width: 95%; padding: 10px; margin: 8px 0; border-radius: 5px; background: #110022; color: #fff; border: 1px solid #bf00ff; font-size: 14px; }
         .btn-main { padding: 12px 25px; background: #bf00ff; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
-        .btn-main:hover { background: #d400ff; }
     </style>
 </head>
 <body>
@@ -82,19 +81,30 @@
             <div class="tab-btn" id="tab-bot" onclick="switchTab('bot')">Чат-бот</div>
         </div>
 
-        <!-- Раздел 1: БАЗА -->
         <div id="list-base" class="tab-content active">
             <div class="theme-btn" onclick="showDetails('007: Замена прибор учета ээ', 'Замена происходит в том случае если у вас сломался прибор по электроэнергии ')">⚡ 007: Замена прибор учета ээ</div>
             <div class="theme-btn" onclick="showDetails('008: коммерческие услуги', 'Текст описания коммерческих услуг или как создать заявку...')">⚡ 008: коммерческие услуги</div>
             <div class="theme-btn" onclick="showDetails('009: Сроки оплаты', 'Квитанцию нужно оплачивать до 15 числа включительно')">⚡ 009: Сроки оплаты</div>
+
+            <div class="theme-btn" onclick="showDetails('001: Тематика', 'Описание темы 001...')">⚡ 001: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('002: Тематика', 'Описание темы 002...')">⚡ 002: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('003: Тематика', 'Описание темы 003...')">⚡ 003: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('004: Тематика', 'Описание темы 004...')">⚡ 004: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('005: Тематика', 'Описание темы 005...')">⚡ 005: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('006: Тематика', 'Описание темы 006...')">⚡ 006: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('010: Тематика', 'Описание темы 010...')">⚡ 010: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('011: Тематика', 'Описание темы 011...')">⚡ 011: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('012: Тематика', 'Описание темы 012...')">⚡ 012: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('050: Тематика', 'Описание темы 050...')">⚡ 050: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('100: Тематика', 'Описание темы 100...')">⚡ 100: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('150: Тематика', 'Описание темы 150...')">⚡ 150: Тематика</div>
+            <div class="theme-btn" onclick="showDetails('200: Тематика', 'Описание темы 200...')">⚡ 200: Тематика</div>
         </div>
 
-        <!-- Раздел 2: ЧАТ-БОТ -->
         <div id="list-bot" class="tab-content">
             <div class="theme-btn" onclick="showDetails('919.03.01: Поверка ПУ воды', '1: Уточните, пожалуйста: поверка была проведена по водоснабжению, верно?\nИ также уточните, пожалуйста, поверка была только по холодной воде или по горячей тоже?\n\n2:Вы можете отправить обращение через сайт ЕИРЦ СПб.ру о том, что у Вас была проведена поверка.\nЕсли Вам неудобно отправлять обращение онлайн, Вы можете лично обратиться в наш клиентский офис.\n\n3:Вы можете отправить обращение через сайт ЕИРЦ СПб.ру.\nДля этого перейдите в раздел «Отправить обращение» → «Вопросы по другим услугам ЖКУ» → «Индивидуальные приборы учёта» → подтема «Принять к расчёту приборы учёта холодной/горячей воды и теплоэнергии».\nДалее Вам необходимо будет прикрепить акт о проведённой поверке, после чего Вы сможете отправить обращение.')">⚡ 919.03.01: Поверка ПУ воды</div>
         </div>
 
-        <!-- Админка -->
         <div id="admin-content">
             <input type="password" id="pass" placeholder="Введите пароль">
             <button class="btn-main" onclick="check()">Войти</button>
@@ -123,7 +133,7 @@
         function switchTab(tabName) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById('search-input').value = "";
+            document.getElementById('search-input').value = ""; // Очищаем строку поиска при смене вкладки
             
             if(tabName === 'base') {
                 document.getElementById('tab-base').classList.add('active');
@@ -172,7 +182,6 @@
         }
         
         function hideDetails() { 
-            document.getElementById('main-screen').style.add = 'none';
             document.getElementById('main-screen').style.display = 'block'; 
             document.getElementById('details').style.display = 'none'; 
         }
