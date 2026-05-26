@@ -5,183 +5,72 @@
     <title>chikohelp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { background: #1a0033; color: #fff; font-family: sans-serif; padding: 15px; overflow-x: hidden; min-height: 100vh; position: relative; box-sizing: border-box; padding-bottom: 60px; }
+        body { background: #1a0033; color: #fff; font-family: sans-serif; padding: 15px; margin: 0; min-height: 100vh; position: relative; box-sizing: border-box; padding-bottom: 70px; }
         
-        /* Эффект проводов */
-        .wires { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: 0.1; }
-        .wire { position: absolute; background: cyan; width: 2px; height: 100px; animation: move 3s linear infinite; }
-        @keyframes move { from { top: -100px; } to { top: 100%; } }
-
-        /* Переключатели разделов (Вкладки) */
-        .tabs { display: flex; justify-content: space-between; width: 90%; margin: 20px auto 15px auto; gap: 10px; }
-        .tab-btn { flex: 1; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(191, 0, 255, 0.3); color: #888; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 15px; transition: 0.3s; text-align: center; }
-        .tab-btn.active { background: rgba(191, 0, 255, 0.2); border-color: #bf00ff; color: #fff; box-shadow: 0 0 10px rgba(191, 0, 255, 0.4); }
-
-        /* Контейнеры списков */
+        /* Вкладки */
+        .tabs { display: flex; justify-content: space-between; width: 90%; margin: 20px auto; gap: 10px; }
+        .tab-btn { flex: 1; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(191, 0, 255, 0.3); color: #888; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; text-align: center; }
+        .tab-btn.active { background: rgba(191, 0, 255, 0.3); border-color: #bf00ff; color: #fff; }
+        
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-
-        /* Крупные и проработанные кнопки тем */
-        .theme-btn { 
-            background: rgba(255, 255, 255, 0.03); 
-            border: 1px solid rgba(191, 0, 255, 0.5); 
-            color: #fff; 
-            padding: 20px; 
-            margin: 15px 0; 
-            border-radius: 15px; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: inset 0 0 10px rgba(191, 0, 255, 0.1);
-            display: block;
-            width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .theme-btn:hover { border-color: #bf00ff; background: rgba(191, 0, 255, 0.2); transform: scale(1.02); box-shadow: 0 0 15px rgba(191, 0, 255, 0.4); }
         
-        /* Окно с текстом статьи */
-        #details { display: none; background: #2a004d; padding: 25px; border-radius: 20px; border: 2px solid #bf00ff; box-shadow: 0 0 30px #bf00ff; margin-top: 20px; }
+        /* Кнопки */
+        .theme-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid #bf00ff; color: #fff; padding: 20px; margin: 15px auto; border-radius: 15px; cursor: pointer; width: 90%; display: block; font-weight: bold; }
         
-        /* Нижня панель */
-        .bottom-bar { position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; align-items: center; z-index: 10; }
-        .admin-toggle-btn { background: none; border: none; color: #442266; cursor: pointer; font-size: 12px; transition: 0.3s; padding: 5px; }
-        .admin-toggle-btn:hover { color: #bf00ff; }
-        .footer-credits { color: #444; font-size: 12px; padding: 5px; }
-
-        #admin-content { display: none; margin: 15px auto; width: 90%; background: rgba(20, 0, 40, 0.95); padding: 15px; border-radius: 10px; border: 1px solid #bf00ff; box-shadow: 0 0 20px #000; }
-        input, textarea { width: 95%; padding: 10px; margin: 8px 0; border-radius: 5px; background: #110022; color: #fff; border: 1px solid #bf00ff; font-size: 14px; }
-        .btn-main { padding: 12px 25px; background: #bf00ff; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
-        .btn-main:hover { background: #d400ff; }
+        /* Окно деталки */
+        #details { display: none; background: #2a004d; padding: 20px; border-radius: 20px; border: 1px solid #bf00ff; }
+        .btn-back { padding: 15px; background: #bf00ff; color: white; border: none; border-radius: 10px; width: 100%; margin-top: 20px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="wires">
-        <div class="wire" style="left: 10%;"></div>
-        <div class="wire" style="left: 50%; animation-delay: 1s;"></div>
-        <div class="wire" style="left: 90%; animation-delay: 2s;"></div>
-    </div>
-
     <div id="main-screen">
-        <!-- Поиск прямо сверху страницы -->
-        <input type="text" id="search-input" placeholder="Поиск по темам..." oninput="searchThemes()" style="width: 90%; display: block; margin: 15px auto 20px auto; background: #110022; color: #fff; border: 1px solid #bf00ff; padding: 12px; border-radius: 10px; font-size: 16px;">
+        <input type="text" id="search-input" placeholder="Поиск по темам..." oninput="searchThemes()" style="width: 90%; display: block; margin: 20px auto; padding: 12px; background: #110022; color: #fff; border: 1px solid #bf00ff; border-radius: 10px;">
 
-        <!-- Переключатели База / Чат-бот -->
         <div class="tabs">
             <div class="tab-btn active" id="tab-base" onclick="switchTab('base')">База</div>
             <div class="tab-btn" id="tab-bot" onclick="switchTab('bot')">Чат-бот</div>
         </div>
 
-        <!-- Раздел 1: БАЗА -->
         <div id="list-base" class="tab-content active">
-            <div class="theme-btn" onclick="showDetails('007: Замена прибор учета ээ', 'Замена происходит в том случае если у вас сломался прибор по электроэнергии ')">⚡ 007: Замена прибор учета ээ</div>
-            <div class="theme-btn" onclick="showDetails('008: коммерческие услуги', 'Текст описания коммерческих услуг или как создать заявку...')">⚡ 008: коммерческие услуги</div>
+            <div class="theme-btn" onclick="showDetails('007: Замена прибор учета ээ', 'Замена происходит в том случае если у вас сломался прибор по электроэнергии')">⚡ 007: Замена прибор учета ээ</div>
+            <div class="theme-btn" onclick="showDetails('008: коммерческие услуги', 'Текст описания коммерческих услуг...')">⚡ 008: коммерческие услуги</div>
             <div class="theme-btn" onclick="showDetails('009: Сроки оплаты', 'Квитанцию нужно оплачивать до 15 числа включительно')">⚡ 009: Сроки оплаты</div>
         </div>
 
-        <!-- Раздел 2: ЧАТ-БОТ -->
         <div id="list-bot" class="tab-content">
-            <div class="theme-btn" onclick="showDetails('919.03.01: Поверка ПУ воды', '1: Уточните, пожалуйста: поверка была проведена по водоснабжению, верно?\nИ также уточните, пожалуйста, поверка была только по холодной воде или по горячей тоже?\n\n2:Вы можете отправить обращение через сайт ЕИРЦ СПб.ру о том, что у Вас была проведена поверка.\nЕсли Вам неудобно отправлять обращение онлайн, Вы можете лично обратиться в наш клиентский офис.\n\n3:Вы можете отправить обращение через сайт ЕИРЦ СПб.ру.\nДля этого перейдите в раздел «Отправить обращение» → «Вопросы по другим услугам ЖКУ» → «Индивидуальные приборы учёта» → подтема «Принять к расчёту приборы учёта холодной/горячей воды и теплоэнергии».\nДалее Вам необходимо будет прикрепить акт о проведённой поверке, после чего Вы сможете отправить обращение.')">⚡ 919.03.01: Поверка ПУ воды</div>
-        </div>
-
-        <!-- Админка -->
-        <div id="admin-content">
-            <input type="password" id="pass" placeholder="Введите пароль">
-            <button class="btn-main" onclick="check()">Войти</button>
-            
-            <div id="editor" style="display:none; margin-top:15px;">
-                <input type="text" id="t" placeholder="Заголовок темы">
-                <textarea id="tx" rows="4" placeholder="Текст инструкции..."></textarea>
-                <button class="btn-main" onclick="generate()">Сгенерировать код кнопки</button>
-                <textarea id="result" style="height:50px; background:#000; margin-top:10px;" readonly onclick="this.select()"></textarea>
-            </div>
-        </div>
-        
-        <!-- Панель управления и Создатель по углам в самом низу -->
-        <div class="bottom-bar">
-            <button class="admin-toggle-btn" onclick="toggleAdminPanel()">Панель управления</button>
-            <div class="footer-credits">Создатель: Мирбек.Б</div>
+            <div class="theme-btn" onclick="showDetails('919.03.01: Поверка ПУ воды', '1: Уточните, пожалуйста: поверка была проведена по водоснабжению, верно?\nИ также уточните, пожалуйста, поверка была только по холодной воде или по горячей тоже?\n\n2: Вы можете отправить обращение через сайт ЕИРЦ СПб.ру о том, что у Вас была проведена поверка.\n\n3: Для этого перейдите в раздел «Отправить обращение» → «Вопросы по другим услугам ЖКУ» → «Индивидуальные приборы учёта» → подтема «Принять к расчёту приборы учёта холодной/горячей воды и теплоэнергии».')">⚡ 919.03.01: Поверка ПУ воды</div>
         </div>
     </div>
 
-    <!-- Экран просмотра текста -->
     <div id="details">
         <h2 id="detail-title" style="color:#0ff; text-align: center;"></h2>
-        <p id="detail-text" style="line-height: 1.6; white-space: pre-wrap; font-size: 15px; margin-bottom: 25px;"></p>
-        <button class="btn-main" onclick="hideDetails()">Назад к списку</button>
+        <p id="detail-text" style="white-space: pre-wrap; line-height: 1.5;"></p>
+        <button class="btn-back" onclick="hideDetails()">Назад к списку</button>
     </div>
 
     <script>
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById('search-input').value = "";
-            
-            if(tabName === 'base') {
-                document.getElementById('tab-base').classList.add('active');
-                document.getElementById('list-base').classList.add('active');
-            } else {
-                document.getElementById('tab-bot').classList.add('active');
-                document.getElementById('list-bot').classList.add('active');
-            }
-            searchThemes();
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('tab-'+tab).classList.add('active');
+            document.getElementById('list-'+tab).classList.add('active');
         }
-
-        function toggleAdminPanel() {
-            let panel = document.getElementById('admin-content');
-            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
-            if(panel.style.display === 'block') { window.scrollTo(0, document.body.scrollHeight); }
+        function showDetails(t, tx) {
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('details').style.display = 'block';
+            document.getElementById('detail-title').innerText = t;
+            document.getElementById('detail-text').innerText = tx;
         }
-
-        function check() { 
-            if(document.getElementById('pass').value === "Mironnmm7#") {
-                document.getElementById('editor').style.display = 'block'; 
-            } else { 
-                alert("Неверный пароль"); 
-            } 
+        function hideDetails() {
+            document.getElementById('main-screen').style.display = 'block';
+            document.getElementById('details').style.display = 'none';
         }
-        
-        function generate() {
-            let t = document.getElementById('t').value.trim();
-            let tx = document.getElementById('tx').value.trim();
-            if(!t || !tx) { alert("Заполни поля!"); return; }
-            let safeT = t.replace(/'/g, "\\'").replace(/"/g, "&quot;");
-            let safeTx = tx.replace(/'/g, "\\'").replace(/"/g, "&quot;");
-            let code = `<div class="theme-btn" onclick="showDetails('${safeT}', '${safeTx}')">⚡ ${safeT}</div>`;
-            let resultArea = document.getElementById('result');
-            resultArea.value = code;
-            resultArea.select();
-            document.getElementById('t').value = "";
-            document.getElementById('tx').value = "";
-        }
-
-        function showDetails(t, tx) { 
-            document.getElementById('main-screen').style.display = 'none'; 
-            document.getElementById('details').style.display = 'block'; 
-            document.getElementById('detail-title').innerText = t; 
-            document.getElementById('detail-text').innerText = tx; 
-            window.scrollTo(0,0);
-        }
-        
-        function hideDetails() { 
-            document.getElementById('main-screen').style.display = 'block'; 
-            document.getElementById('details').style.display = 'none'; 
-        }
-
         function searchThemes() {
-            let input = document.getElementById('search-input').value.toLowerCase();
-            let activeList = document.querySelector('.tab-content.active');
-            let buttons = activeList.querySelectorAll('.theme-btn');
-            
-            buttons.forEach(function(btn) {
-                let text = btn.innerText.toLowerCase();
-                if (text.includes(input)) {
-                    btn.style.display = "block";
-                } else {
-                    btn.style.display = "none";
-                }
+            let val = document.getElementById('search-input').value.toLowerCase();
+            document.querySelectorAll('.tab-content.active .theme-btn').forEach(b => {
+                b.style.display = b.innerText.toLowerCase().includes(val) ? 'block' : 'none';
             });
         }
     </script>
